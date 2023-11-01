@@ -3,7 +3,9 @@ import './charactersList.scss';
 import { AppContext } from '../../context/AppContext';
 import Card from '../card/Card';
 
-interface AppState {
+interface Props {}
+
+interface State {
   inputValue: string;
   charactersList: unknown[];
 }
@@ -20,7 +22,7 @@ interface CharacterType {
   starships?: string[];
 }
 
-class CharactersList extends React.Component<AppState> {
+class CharactersList extends React.Component<Props, State> {
   static context = AppContext;
   render() {
     const value = this.context;

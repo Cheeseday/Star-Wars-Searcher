@@ -40,7 +40,6 @@ class App extends React.Component<AppProps, AppState> {
     await fetch(`${url}`)
       .then((response) => response.json())
       .then((response) => {
-        console.log(response.results);
         this.setState({
           charactersList: response.results,
           isLoading: false,
@@ -52,7 +51,7 @@ class App extends React.Component<AppProps, AppState> {
     this.setState({
       inputValue: event.target.value,
     });
-  }
+  };
 
   getSearchKey(): string | null {
     let lastSearch: string | null = null;
@@ -63,7 +62,7 @@ class App extends React.Component<AppProps, AppState> {
     return lastSearch;
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.searchHandler();
   }
 
@@ -77,9 +76,7 @@ class App extends React.Component<AppProps, AppState> {
         }}
       >
         <Layout />
-        <div className="load">
-          {this.state.isLoading ? <Loader /> : <div></div>}
-        </div>
+        <div>{this.state.isLoading ? <Loader /> : <div></div>}</div>
       </AppContext.Provider>
     );
   }
