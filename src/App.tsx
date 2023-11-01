@@ -49,7 +49,7 @@ class App extends React.Component<AppProps, AppState> {
   }
   inputValueHandler = (event: KeyboardEvent): void => {
     this.setState({
-      inputValue: event.target.value,
+      inputValue: (event.target as HTMLInputElement)?.value,
     });
   };
 

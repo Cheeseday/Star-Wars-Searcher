@@ -15,6 +15,9 @@ type MyState = {
 };
 
 class Button extends React.Component<MyProps, MyState> {
+  constructor(props: MyProps) {
+    super(props);
+  }
   state: MyState = {
     count: 0,
   };

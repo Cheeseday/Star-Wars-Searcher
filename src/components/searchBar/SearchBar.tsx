@@ -4,10 +4,15 @@ import Button from '../button/Button';
 import { AppContext } from '../../context/AppContext';
 import ErrorButton from '../errorButton/ErrorButton';
 
+type InputValueHandler = {
+  inputValueHandler?: () => void;
+  searchHandler: () => Promise<void> | undefined;
+};
+
 class SearchBar extends React.Component {
   static context = AppContext;
   render() {
-    const value = this.context;
+    const value = this.context as InputValueHandler;
 
     return (
       <section className="searchBar">
