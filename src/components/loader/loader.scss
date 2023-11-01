@@ -1,7 +1,9 @@
 @import '../../variables.scss';
 
 .lds-ring {
-  position: relative;
+  position: absolute;
+  top: 42%;
+  left: 47%;
 
   display: inline-block;
 
@@ -18,10 +20,11 @@
   height: 64px;
   margin: 8px;
   border: 8px solid $light;
+  border: 8px solid #5d4a4a;
   border-radius: 50%;
+  border-color: #5c5151 transparent transparent transparent;
 
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: $light transparent transparent transparent;
 }
 
 .lds-ring div:nth-child(1) {

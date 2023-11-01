@@ -2,7 +2,6 @@
 
 .button {
   padding: 4px 16px;
-
   border: 2px solid $baseDarken;
   border-radius: 5px;
 
@@ -12,6 +11,8 @@
   background-color: $light;
 
   transition: $button-transition;
+
+  cursor: pointer;
 }
 
 @media (hover: hover) {

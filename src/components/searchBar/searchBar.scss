@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;1,200;1,300&family=Roboto:ital,wght@0,400;0,500;1,300;1,400&display=swap');
 @import '../../variables.scss';
 
 .searchBar {
@@ -7,6 +8,7 @@
 
   padding: 35px 0;
 
+  font-family: 'Roboto';
   background-color: $base;
 
   .searchLine {

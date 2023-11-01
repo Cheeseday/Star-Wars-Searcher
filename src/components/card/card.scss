@@ -7,8 +7,8 @@
 
   padding-bottom: 10px;
   border: 2px solid $baseDarken;
-  border-bottom-left-radius: 20px;
   border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
 
   color: $baseText;
 
@@ -17,8 +17,8 @@
   p {
     margin: 5px 10px;
 
-    font-weight: 300;
     font-size: 18px;
+    font-weight: 300;
   }
 
   .cardName {

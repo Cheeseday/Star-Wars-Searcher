@@ -1,31 +1,53 @@
 import React from 'react';
 import './charactersList.scss';
+import { AppContext } from '../../context/AppContext';
+import Card from '../card/Card';
 
-type RespObject = {
+interface AppState {
+  inputValue: string;
+  charactersList: unknown[];
+}
+
+interface CharacterType {
   name: string;
+  birth_year: string;
   gender: string;
-};
-type Props = {
-  charactersList: RespObject[];
-};
+  height: string;
+  mass: string;
+  homeworld: string;
+  hair_color?: string;
+  skin_color?: string;
+  starships?: string[];
+}
 
-class CharactersList extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
+class CharactersList extends React.Component<AppState> {
+  static context = AppContext;
   render() {
-    const { charactersList } = this.props;
+    const value = this.context;
     return (
-      <div>
-        <ul>
-          {charactersList.map((item, index) => {
-            return <li key={index}>{item?.name}</li>;
-          })}
-        </ul>
-      </div>
+      <section className="cardBlock">
+        {value.state.charactersList.map(
+          (item: CharacterType, index: number) => {
+            return (
+              <Card
+                key={index}
+                name={item.name}
+                birth_year={item?.birth_year}
+                gender={item?.gender}
+                height={item.height}
+                mass={item.mass}
+                hair_color={item.hair_color}
+                skin_color={item.skin_color}
+              >
+                {item?.name}
+              </Card>
+            );
+          }
+        )}
+      </section>
     );
   }
 }
+CharactersList.contextType = AppContext;
 
 export default CharactersList;

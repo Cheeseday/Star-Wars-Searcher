@@ -1,39 +1,31 @@
 import React from 'react';
 import './searchBar.scss';
 import Button from '../button/Button';
+import { AppContext } from '../../context/AppContext';
 
-// type MyProps = {
-//   disabled: boolean;
-// };
-type Props = {
-  // charactersList: object[];
-  searchHandler: () => Promise<void>;
-};
-
-class SearchBar extends React.Component<Props> {
-  // state: State = {
-  //   count: 0,
-  //   // charactersList: [],
-  // };
-  constructor(props: Props) {
-    super(props);
-  }
+class SearchBar extends React.Component {
+  static context = AppContext;
   render() {
-    const { searchHandler } = this.props;
+    const value = this.context;
+
     return (
       <section className="searchBar">
         <div className="searchLine">
-          <input placeholder="Enter someone from the Star Wars universe"></input>
+          <input
+            placeholder="Enter someone from the Star Wars universe"
+            onChange={value.inputValueHandler}
+          ></input>
           <Button
             disabled={false}
             text="Search"
-            // class="searchButton"
-            click={searchHandler}
+            click={value.searchHandler}
           ></Button>
         </div>
       </section>
     );
   }
 }
+
+SearchBar.contextType = AppContext;
 
 export default SearchBar;
