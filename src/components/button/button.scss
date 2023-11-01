@@ -1,0 +1,24 @@
+@import '../../variables.scss';
+
+.button {
+  margin: 0 20px;
+  padding: 4px 16px;
+  border: 2px solid $baseDarken;
+  border-radius: 5px;
+
+  font-size: 18px;
+  font-weight: 500;
+  color: $baseText;
+  background-color: $light;
+
+  transition: $button-transition;
+
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .button:hover {
+    color: $light;
+    background-color: $baseDarken;
+  }
+}

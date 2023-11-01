@@ -1,0 +1,32 @@
+.cardBlock {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 50px 100px;
+
+  margin: 8vh 10vw;
+}
+
+@media (max-width: 1400px) {
+  .cardBlock {
+    gap: 40px 60px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .cardBlock {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 60px;
+  }
+}
+
+@media (max-width: 992px) {
+  .cardBlock {
+    gap: 30px 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cardBlock {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
