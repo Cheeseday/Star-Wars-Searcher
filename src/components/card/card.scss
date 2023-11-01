@@ -1,0 +1,45 @@
+@import '../../variables.scss';
+
+.card {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  padding-bottom: 10px;
+  border: 2px solid $baseDarken;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+
+  color: $baseText;
+
+  transition: all 0.4s ease-out;
+
+  p {
+    margin: 5px 10px;
+
+    font-weight: 300;
+    font-size: 18px;
+  }
+
+  .cardName {
+    align-self: center;
+
+    margin: 12px 5px;
+
+    font-size: 21px;
+    font-weight: 600;
+
+    transition: all 0.4s ease-out;
+  }
+}
+
+@media (hover: hover) {
+  .card:hover {
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+    .cardName {
+      transform: scale(1.1, 1.1);
+    }
+  }
+}
