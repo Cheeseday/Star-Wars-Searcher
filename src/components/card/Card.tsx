@@ -1,8 +1,7 @@
 import React from 'react';
 import './card.scss';
-import { AppContext } from '../../context/AppContext';
 
-interface Props {
+type CardProps = {
   children: string;
   name: string;
   birth_year: string;
@@ -13,31 +12,22 @@ interface Props {
   hair_color?: string;
   skin_color?: string;
   starships?: string[];
-}
+};
 
-class Card extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-  static context = AppContext;
-
-  render() {
-    const { name, birth_year, gender, height, mass, skin_color, hair_color } =
-      this.props;
-    return (
-      <article className="card">
-        <p className="cardName">{name}</p>
-        <p className="cardBirthYear">Birth year: {birth_year}</p>
-        <p className="cardGender">Gender: {gender}</p>
-        <p className="cardHeight">Height: {height}</p>
-        <p className="cardWeight">Weight: {mass}</p>
-        <p className="cardSkinColor">Skin color: {skin_color}</p>
-        <p className="cardHairColor">Hair color: {hair_color}</p>
-      </article>
-    );
-  }
-}
-
-Card.contextType = AppContext;
+const Card: React.FC<CardProps> = (props) => {
+  const { name, birth_year, gender, height, mass, skin_color, hair_color } =
+    props;
+  return (
+    <article className="card">
+      <p className="cardName">{name}</p>
+      <p className="cardBirthYear">Birth year: {birth_year}</p>
+      <p className="cardGender">Gender: {gender}</p>
+      <p className="cardHeight">Height: {height}</p>
+      <p className="cardWeight">Weight: {mass}</p>
+      <p className="cardSkinColor">Skin color: {skin_color}</p>
+      <p className="cardHairColor">Hair color: {hair_color}</p>
+    </article>
+  );
+};
 
 export default Card;

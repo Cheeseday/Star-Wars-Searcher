@@ -1,40 +1,48 @@
 import React from 'react';
 import './button.scss';
 
-type Click = (arg?: string) => Promise<void> | undefined;
+type ClickType = (arg?: string) => Promise<void> | undefined;
 
-type MyProps = {
+type ButtonProps = {
   disabled: boolean;
   text: string;
-  click: Click;
+  click: ClickType | (() => void) | void;
   arg?: string;
 };
 
-type MyState = {
-  count: number;
+const Button: React.FC<ButtonProps> = (props) => {
+  return (
+    <button
+      className="button"
+      disabled={props.disabled}
+      onClick={() => (props.click ? props.click(props.arg || '') : undefined)}
+    >
+      {props.text}
+    </button>
+  );
 };
 
-class Button extends React.Component<MyProps, MyState> {
-  constructor(props: MyProps) {
-    super(props);
-  }
-  state: MyState = {
-    count: 0,
-  };
+// class Button extends React.Component<MyProps, MyState> {
+//   constructor(props: MyProps) {
+//     super(props);
+//   }
+//   state: MyState = {
+//     count: 0,
+//   };
 
-  render() {
-    return (
-      <button
-        className="button"
-        disabled={this.props.disabled}
-        onClick={() =>
-          this.props.click ? this.props.click(this.props.arg || '') : undefined
-        }
-      >
-        {this.props.text}
-      </button>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <button
+//         className="button"
+//         disabled={this.props.disabled}
+//         onClick={() =>
+//           this.props.click ? this.props.click(this.props.arg || '') : undefined
+//         }
+//       >
+//         {this.props.text}
+//       </button>
+//     );
+//   }
+// }
 
 export default Button;
