@@ -1,20 +1,22 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import classnames from 'classnames';
 import { usePagination, DOTS } from '../../hoc/usePagination';
 import './pagination.scss';
 
 type Props = {
   onPageChange: (page: number) => void;
+  onPageSizeChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   totalCount: number;
   siblingCount: number;
   currentPage: number;
-  pageSize: number;
+  pageSize: string;
   className: string;
 };
 
 const Pagination: React.FC<Props> = (props) => {
   const {
     onPageChange,
+    onPageSizeChange,
     totalCount,
     siblingCount = 1,
     currentPage,
@@ -29,7 +31,6 @@ const Pagination: React.FC<Props> = (props) => {
     pageSize,
   });
 
-  // If there are less than 2 times in pagination range we shall not render the component
   if (currentPage === 0 || paginationRange.length < 2) {
     return null;
   }
@@ -47,7 +48,6 @@ const Pagination: React.FC<Props> = (props) => {
     <ul
       className={classnames('pagination-container', { [className]: className })}
     >
-      {/* Left navigation arrow */}
       <li
         className={classnames('pagination-item', {
           disabled: currentPage === 1,
@@ -57,7 +57,6 @@ const Pagination: React.FC<Props> = (props) => {
         <div className="arrow left" />
       </li>
       {paginationRange.map((pageNumber, index) => {
-        // If the pageItem is a DOT, render the DOTS unicode character
         if (pageNumber === DOTS) {
           return (
             <li key={index} className="pagination-item dots">
@@ -65,7 +64,6 @@ const Pagination: React.FC<Props> = (props) => {
             </li>
           );
         }
-        // Render our Page Pills
         if (typeof pageNumber === 'number') {
           return (
             <li
@@ -80,7 +78,6 @@ const Pagination: React.FC<Props> = (props) => {
           );
         }
       })}
-      {/*  Right Navigation arrow */}
       <li
         className={classnames('pagination-item', {
           disabled: currentPage === lastPage,
@@ -88,6 +85,14 @@ const Pagination: React.FC<Props> = (props) => {
         onClick={onNext}
       >
         <div className="arrow right" />
+      </li>
+      <li>
+        <label htmlFor="pageSize">Items: </label>
+        <select id="pageSize" defaultValue={20} onChange={onPageSizeChange}>
+          <option value={10}>10 / page</option>
+          <option value={20}>20 / page</option>
+          <option value={50}>50 / page</option>
+        </select>
       </li>
     </ul>
   );

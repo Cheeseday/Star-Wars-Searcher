@@ -1,57 +1,79 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, ChangeEvent } from 'react';
 import './App.scss';
 import Loader from './components/loader/Loader';
 import SearchBar from './components/searchBar/SearchBar';
 import CharactersList from './components/charactersList/CharactersList';
 import Pagination from './components/pagination/Pagination';
-import { flushSync } from 'react-dom';
 
-type ResponseType = {
-  results: string[];
-  count: number;
+type CharacterType = {
+  info: { totalPages: number; count: number };
+  data: object[];
 };
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isNewRequest, setIsNewRequest] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [charactersList, setCharactersList] = useState(['']);
+  const [charactersList, setCharactersList] = useState([{}]);
   const [totalCount, setTotalCount] = useState(82);
   const [siblingCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10);
+  const [pageSize, setPageSize] = useState('20');
   const inputValueHandler = (): void => {
     if (event) setInputValue((event.target as HTMLInputElement)?.value);
   };
   useEffect(() => {
-    searchHandler();
+    searchHandler(1, 1, '20');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const searchHandler = (): void => {
+  const searchHandler = (
+    page = 1,
+    changeReqCode = 1,
+    sizeOfPage = pageSize
+  ): void => {
     setIsLoading(true);
-    setCharactersList([]);
-    const currentPageNumber = currentPage > 0 ? currentPage : 1;
-    console.log(currentPage);
-    let queryString = `?page=${currentPageNumber}`;
-    const querySearchParam = getSearchKey();
-    if (querySearchParam && !inputValue) {
-      queryString += `&search=${querySearchParam}`;
-    } else if (inputValue) {
-      queryString += `&search=${inputValue}`;
-      localStorage.setItem('searchKey', JSON.stringify(inputValue));
+    if (changeReqCode) {
+      setIsNewRequest(true);
+      setCurrentPage(1);
     }
-    getResponse(queryString, setIsLoading).then((response) => {
-      setCharactersList(response.results);
-      setTotalCount(response.count);
+    setCharactersList([]);
+    const queryString = getQueryString(page, sizeOfPage);
+    getCharacters(queryString, setIsLoading).then((response) => {
+      setCharactersList(response.data);
+      setTotalCount(response.info.totalPages * response.info.count);
+      setIsNewRequest(false);
     });
   };
+  const getQueryString = (page: number, pageSize: string): string => {
+    let queryString = '';
+    queryString = `?page=${page}&pageSize=${pageSize}`;
+    const querySearchParam = getSearchKey();
+    if (querySearchParam && !inputValue) {
+      queryString += `&name=${querySearchParam}`;
+    } else if (inputValue) {
+      queryString += `&name=${inputValue}`;
+      localStorage.setItem('nameKey', JSON.stringify(inputValue));
+    }
+    return queryString;
+  };
   const pageChangeHandler = (page: number): void => {
-    flushSync(() => setCurrentPage(page));
-    // setCurrentPage(page); //force update
-    searchHandler();
+    const changeReqCode = 0;
+    setCurrentPage(page);
+    searchHandler(page, changeReqCode);
   };
   const getSearchKey = (): string => {
-    const value = localStorage.getItem('searchKey');
+    const value = localStorage.getItem('nameKey');
     return typeof value === 'string' ? JSON.parse(value) : '';
+  };
+
+  const pageSizeChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
+    let pageSize = '10';
+    if (event) {
+      pageSize = event?.target?.value;
+      setPageSize(pageSize);
+    }
+    const changeReqCode = 0;
+    searchHandler(1, changeReqCode, pageSize);
   };
   return (
     <Fragment>
@@ -60,32 +82,41 @@ const App: React.FC = () => {
           searchHandler={searchHandler}
           inputValueHandler={inputValueHandler}
         />
-        <CharactersList charactersList={charactersList} />
-        <Pagination
-          className="paginationBar"
-          totalCount={totalCount}
-          currentPage={currentPage}
-          siblingCount={siblingCount}
-          pageSize={pageSize}
-          onPageChange={(page) => pageChangeHandler(page)}
-        />
+        <div>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <div>
+              <CharactersList charactersList={charactersList} />
+            </div>
+          )}
+        </div>
+        <div>
+          {isNewRequest ? (
+            <div></div>
+          ) : (
+            <Pagination
+              className="paginationBar"
+              totalCount={totalCount}
+              currentPage={currentPage}
+              siblingCount={siblingCount}
+              pageSize={pageSize}
+              onPageChange={(page) => pageChangeHandler(page)}
+              onPageSizeChange={(event) => pageSizeChangeHandler(event)}
+            />
+          )}
+        </div>
       </main>
-      <div>{isLoading ? <Loader /> : <div></div>}</div>
     </Fragment>
   );
 };
 
-async function getResponse(
+async function getCharacters(
   value: string,
   loadingSetter: React.Dispatch<React.SetStateAction<boolean>>
-): Promise<ResponseType> {
-  const url = `https://swapi.dev/api/people/${value}`;
-  // const url = `https://swapi.dev/api/people/${value}&page=5`;
-  let answer: ResponseType = {
-    results: [],
-    count: 0,
-  };
-  answer = await fetch(`${url}`)
+): Promise<CharacterType> {
+  const url = `https://api.disneyapi.dev/character${value}`;
+  const answer: CharacterType = await fetch(`${url}`)
     .then((response) => response.json())
     .then((response) => {
       console.log(response);

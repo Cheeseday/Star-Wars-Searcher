@@ -4,7 +4,7 @@ type RangeType = (start: number, end: number) => number[];
 
 type PaginationType = {
   totalCount: number;
-  pageSize: number;
+  pageSize: string;
   siblingCount: number;
   currentPage: number;
 };
@@ -26,7 +26,7 @@ const usePagination: (pag: PaginationType) => (string | number)[] = ({
   currentPage,
 }) => {
   const paginationRange = useMemo(() => {
-    const totalPageCount = Math.ceil(totalCount / pageSize);
+    const totalPageCount = Math.ceil(totalCount / Number.parseInt(pageSize));
 
     // Pages count is determined as siblingCount + firstPage + lastPage + currentPage + 2*DOTS
     const totalPageNumbers = siblingCount + 5;

@@ -22,27 +22,4 @@ const Button: React.FC<ButtonProps> = (props) => {
   );
 };
 
-// class Button extends React.Component<MyProps, MyState> {
-//   constructor(props: MyProps) {
-//     super(props);
-//   }
-//   state: MyState = {
-//     count: 0,
-//   };
-
-//   render() {
-//     return (
-//       <button
-//         className="button"
-//         disabled={this.props.disabled}
-//         onClick={() =>
-//           this.props.click ? this.props.click(this.props.arg || '') : undefined
-//         }
-//       >
-//         {this.props.text}
-//       </button>
-//     );
-//   }
-// }
-
 export default Button;

@@ -1,9 +1,9 @@
 .cardBlock {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 50px 100px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 60px 40px;
 
-  margin: 8vh 10vw;
+  padding: 8vh 10vw 3vh;
 }
 
 @media (max-width: 1400px) {

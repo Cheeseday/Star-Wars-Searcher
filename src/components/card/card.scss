@@ -2,7 +2,6 @@
 
 .card {
   display: flex;
-  justify-content: center;
   flex-direction: column;
 
   padding-bottom: 10px;
@@ -15,7 +14,7 @@
   transition: all 0.4s ease-out;
 
   p {
-    margin: 5px 10px;
+    margin: 4px 10px;
 
     font-size: 18px;
     font-weight: 300;
@@ -24,7 +23,7 @@
   .cardName {
     align-self: center;
 
-    margin: 12px 5px;
+    margin: 12px 8px;
 
     font-size: 21px;
     font-weight: 600;
@@ -39,7 +38,7 @@
     border-bottom-right-radius: 20px;
 
     .cardName {
-      transform: scale(1.1, 1.1);
+      transform: scale(1.05, 1.05);
     }
   }
 }
