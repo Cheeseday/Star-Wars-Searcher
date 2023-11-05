@@ -13,6 +13,9 @@ const SearchBar: React.FC<SearchBarPropsType> = (props) => {
     <section className="searchBar">
       <div className="searchLine">
         <input
+          id="name"
+          name="name"
+          type="search"
           placeholder="Enter someone from the Star Wars universe"
           onChange={props.inputValueHandler}
         ></input>

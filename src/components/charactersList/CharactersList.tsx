@@ -16,12 +16,7 @@ const CharactersList: React.FC<Props> = (props) => {
     <section className="cardBlock">
       {props.charactersList.map((item: CharacterType, index: number) => {
         return (
-          <Card
-            key={index}
-            name={item.name}
-            imageUrl={item.imageUrl}
-            films={item.films}
-          ></Card>
+          <Card key={index} name={item.name} imageUrl={item.imageUrl}></Card>
         );
       })}
     </section>

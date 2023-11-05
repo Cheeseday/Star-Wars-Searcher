@@ -46,7 +46,9 @@ const Pagination: React.FC<Props> = (props) => {
   const lastPage = paginationRange[paginationRange.length - 1];
   return (
     <ul
-      className={classnames('pagination-container', { [className]: className })}
+      className={classnames('pagination-container', {
+        [className]: className,
+      })}
     >
       <li
         className={classnames('pagination-item', {
@@ -86,9 +88,13 @@ const Pagination: React.FC<Props> = (props) => {
       >
         <div className="arrow right" />
       </li>
-      <li>
+      <li className="paginationPageSize">
         <label htmlFor="pageSize">Items: </label>
-        <select id="pageSize" defaultValue={20} onChange={onPageSizeChange}>
+        <select
+          id="pageSize"
+          defaultValue={pageSize}
+          onChange={onPageSizeChange}
+        >
           <option value={10}>10 / page</option>
           <option value={20}>20 / page</option>
           <option value={50}>50 / page</option>
