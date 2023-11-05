@@ -1,0 +1,136 @@
+.paginationBar {
+  padding: 0 10px;
+}
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  list-style-type: none;
+
+  label {
+    margin-left: 15px;
+  }
+  select {
+    width: 90px;
+    margin-left: 4px;
+    padding: 0 1em 0 0;
+    border: none;
+
+    font-family: inherit;
+    font-size: inherit;
+
+    outline: none;
+
+    &::-ms-expand {
+      display: none;
+    }
+  }
+  #pageSize {
+    position: relative;
+
+    display: inline-grid;
+    grid-template-areas: 'select';
+    align-items: center;
+
+    min-width: 12ch;
+    padding: 0.25em 0.5em;
+    border: 1px solid #777;
+    border-radius: 0.25em;
+
+    cursor: pointer;
+    line-height: 1.1;
+
+    select,
+    &::after {
+      grid-area: select;
+    }
+  }
+  .pagination-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 32px;
+    margin: auto 3px;
+    padding: 0 9px;
+    border-radius: 16px;
+
+    font-size: 16px;
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+    color: rgba(0, 0, 0, 0.87);
+    text-align: center;
+
+    transition: all 0.3s ease-out;
+
+    &.dots:hover {
+      background-color: transparent;
+
+      cursor: default;
+    }
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.08);
+
+      cursor: pointer;
+    }
+
+    &.selected {
+      background-color: rgba(0, 0, 0, 0.22);
+    }
+
+    .arrow {
+      &::before {
+        position: relative;
+        content: '';
+
+        display: inline-block;
+
+        width: 0.4em;
+        height: 0.4em;
+        border-right: 0.12em solid rgba(0, 0, 0, 0.87);
+        border-top: 0.12em solid rgba(0, 0, 0, 0.87);
+      }
+
+      &.left {
+        transform: rotate(-135deg) translate(-50%);
+      }
+
+      &.right {
+        transform: rotate(45deg);
+      }
+    }
+
+    &.disabled {
+      pointer-events: none;
+
+      .arrow::before {
+        border-right: 0.12em solid rgba(0, 0, 0, 0.43);
+        border-top: 0.12em solid rgba(0, 0, 0, 0.43);
+      }
+
+      &:hover {
+        background-color: transparent;
+        cursor: default;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .pagination-item {
+    min-width: 32px;
+  }
+}
+@media (min-width: 576px) {
+  .paginationBar {
+    padding: 0 0 0 40px;
+  }
+  .pagination-item {
+    height: 32px;
+    margin: auto 4px;
+    padding: 0 12px;
+  }
+}

@@ -1,13 +1,14 @@
 .cardBlock {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 50px 100px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 50px 2.5vw;
 
-  margin: 8vh 10vw;
+  padding: 8vh 2vw 3vh;
 }
 
 @media (max-width: 1400px) {
   .cardBlock {
+    grid-template-columns: repeat(4, 1fr);
     gap: 40px 60px;
   }
 }
@@ -21,7 +22,7 @@
 
 @media (max-width: 992px) {
   .cardBlock {
-    gap: 30px 40px;
+    gap: 30px 20px;
   }
 }
 

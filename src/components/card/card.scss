@@ -2,20 +2,25 @@
 
 .card {
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  justify-content: space-between;
 
-  padding-bottom: 10px;
   border: 2px solid $baseDarken;
   border-top-right-radius: 20px;
   border-bottom-left-radius: 20px;
 
   color: $baseText;
 
+  cursor: pointer;
   transition: all 0.4s ease-out;
 
+  img {
+    border-bottom-left-radius: 19px;
+
+    transition: all 0.4s ease-out;
+  }
   p {
-    margin: 5px 10px;
+    margin: 4px 10px;
 
     font-size: 18px;
     font-weight: 300;
@@ -24,7 +29,7 @@
   .cardName {
     align-self: center;
 
-    margin: 12px 5px;
+    margin: 9px 12px;
 
     font-size: 21px;
     font-weight: 600;
@@ -37,6 +42,10 @@
   .card:hover {
     border-top-left-radius: 20px;
     border-bottom-right-radius: 20px;
+
+    img {
+      border-bottom-right-radius: 19px;
+    }
 
     .cardName {
       transform: scale(1.1, 1.1);

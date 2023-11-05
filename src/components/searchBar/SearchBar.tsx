@@ -1,38 +1,34 @@
 import React from 'react';
 import './searchBar.scss';
 import Button from '../button/Button';
-import { AppContext } from '../../context/AppContext';
 import ErrorButton from '../errorButton/ErrorButton';
 
-type InputValueHandler = {
-  inputValueHandler?: () => void;
-  searchHandler: () => Promise<void> | undefined;
+type SearchBarPropsType = {
+  searchHandler: void | (() => void);
+  inputValueHandler: () => void;
+  closeDetailsHandler: () => void;
 };
 
-class SearchBar extends React.Component {
-  static context = AppContext;
-  render() {
-    const value = this.context as InputValueHandler;
-
-    return (
-      <section className="searchBar">
-        <div className="searchLine">
-          <input
-            placeholder="Enter someone from the Star Wars universe"
-            onChange={value.inputValueHandler}
-          ></input>
-          <Button
-            disabled={false}
-            text="Search"
-            click={value.searchHandler}
-          ></Button>
-          <ErrorButton />
-        </div>
-      </section>
-    );
-  }
-}
-
-SearchBar.contextType = AppContext;
+const SearchBar: React.FC<SearchBarPropsType> = (props) => {
+  return (
+    <section className="searchBar" onClick={props.closeDetailsHandler}>
+      <div className="searchLine">
+        <input
+          id="name"
+          name="name"
+          type="search"
+          placeholder="Enter someone from the Star Wars universe"
+          onChange={props.inputValueHandler}
+        ></input>
+        <Button
+          disabled={false}
+          text="Search"
+          click={props.searchHandler}
+        ></Button>
+        <ErrorButton />
+      </div>
+    </section>
+  );
+};
 
 export default SearchBar;
