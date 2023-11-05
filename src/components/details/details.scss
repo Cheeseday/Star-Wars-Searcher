@@ -1,0 +1,17 @@
+.details {
+  height: inherit;
+  max-width: 21vw;
+  padding: 12px;
+
+  background-color: rgb(223, 218, 218);
+
+  .detailsName {
+    padding: 0 40px;
+  }
+  ul {
+    padding-bottom: 10px;
+  }
+  li {
+    padding: 5px 0;
+  }
+}

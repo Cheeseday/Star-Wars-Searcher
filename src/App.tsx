@@ -5,17 +5,46 @@ import SearchBar from './components/searchBar/SearchBar';
 import CharactersList from './components/charactersList/CharactersList';
 import Pagination from './components/pagination/Pagination';
 import { useNavigate } from 'react-router-dom';
+import Details from './components/details/Details';
 
 type CharacterType = {
   info: { totalPages: number; count: number };
-  data: object[];
+  data:
+    | {
+        name: string;
+        films: string[];
+        tvShows: string[];
+        videoGames: string[];
+      }[]
+    | {
+        name: string;
+        films: string[];
+        tvShows: string[];
+        videoGames: string[];
+      };
+};
+
+type CardType = {
+  name: string;
+  films: string[];
+  tvShows: string[];
+  videoGames: string[];
 };
 
 export const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isShownDetails, setIsShownDetails] = useState(false);
   const [isNewRequest, setIsNewRequest] = useState(false);
+  const [currentCard, setCurrentCard] = useState({
+    name: '',
+    films: [''],
+    tvShows: [''],
+    videoGames: [''],
+  });
   const [inputValue, setInputValue] = useState('');
-  const [charactersList, setCharactersList] = useState([{}]);
+  const [charactersList, setCharactersList] = useState([
+    { name: '', films: [''], tvShows: [''], videoGames: [''] },
+  ]);
   const [totalCount, setTotalCount] = useState(1);
   const [siblingCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,8 +71,11 @@ export const App: React.FC = () => {
     const queryString = getQueryString(page, sizeOfPage);
     getCharacters(queryString, setIsLoading)
       .then((response) => {
+        Array.isArray(response.data)
+          ? setCharactersList(response.data)
+          : setCharactersList([response.data]);
+        console.log(charactersList);
         setTotalCount(response.info.totalPages * +sizeOfPage);
-        setCharactersList(response.data);
         setIsNewRequest(false);
       })
       .catch((e) => console.log(e.stack));
@@ -91,19 +123,47 @@ export const App: React.FC = () => {
     const changeReqCode = 1;
     searchHandler(1, changeReqCode, pageSize);
   };
+  const cardClickHandler = (name: string): void => {
+    const currentCard = charactersList.find((value) => {
+      if (value.name === name) {
+        return value;
+      }
+    });
+    let cardDescription: CardType;
+    if (currentCard) {
+      cardDescription = {
+        name,
+        films: currentCard.films,
+        tvShows: currentCard.tvShows,
+        videoGames: currentCard.videoGames,
+      };
+      setCurrentCard(cardDescription);
+    }
+    setIsShownDetails(!isShownDetails);
+  };
+  const closeDetailsHandler = (): void => {
+    if (isShownDetails) {
+      setIsShownDetails(false);
+    }
+  };
   return (
     <Fragment>
-      <main>
+      <main id="main">
         <SearchBar
           searchHandler={searchHandler}
           inputValueHandler={inputValueHandler}
+          closeDetailsHandler={closeDetailsHandler}
         />
         <div>
           {isLoading ? (
             <Loader />
           ) : (
             <div>
-              <CharactersList charactersList={charactersList} />
+              <CharactersList
+                charactersList={charactersList}
+                cardClickHandler={cardClickHandler}
+                closeDetailsHandler={closeDetailsHandler}
+              />
             </div>
           )}
         </div>
@@ -123,6 +183,14 @@ export const App: React.FC = () => {
           )}
         </div>
       </main>
+      {!isShownDetails ? (
+        <div></div>
+      ) : (
+        <Details
+          details={currentCard}
+          closeDetailsHandler={closeDetailsHandler}
+        ></Details>
+      )}
     </Fragment>
   );
 };
@@ -132,7 +200,6 @@ async function getCharacters(
   loadingSetter: React.Dispatch<React.SetStateAction<boolean>>
 ): Promise<CharacterType> {
   const url = `https://api.disneyapi.dev/character${value}`;
-  // const url = `https://api.disneyapi.dev/character/`;
   const answer: CharacterType = await fetch(`${url}`)
     .then((response) => response.json())
     .then((response) => {

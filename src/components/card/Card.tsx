@@ -1,16 +1,17 @@
 import React from 'react';
 import './card.scss';
+import { Outlet } from 'react-router-dom';
 
 type Props = {
   name: string;
   imageUrl: string;
-  // films: string[];
+  cardClickHandler: (name: string) => void;
 };
 
 const Card: React.FC<Props> = (props) => {
-  const { name, imageUrl } = props;
+  const { name, imageUrl, cardClickHandler } = props;
   return (
-    <article className="card">
+    <article className="card" onClick={() => cardClickHandler(name)}>
       <p className="cardName">{name}</p>
       <img
         src={imageUrl}
@@ -19,6 +20,7 @@ const Card: React.FC<Props> = (props) => {
         height={220}
         width={'100%'}
       ></img>
+      <Outlet />
     </article>
   );
 };

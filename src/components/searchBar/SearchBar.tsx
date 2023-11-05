@@ -6,11 +6,12 @@ import ErrorButton from '../errorButton/ErrorButton';
 type SearchBarPropsType = {
   searchHandler: void | (() => void);
   inputValueHandler: () => void;
+  closeDetailsHandler: () => void;
 };
 
 const SearchBar: React.FC<SearchBarPropsType> = (props) => {
   return (
-    <section className="searchBar">
+    <section className="searchBar" onClick={props.closeDetailsHandler}>
       <div className="searchLine">
         <input
           id="name"

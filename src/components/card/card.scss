@@ -8,11 +8,12 @@
   border: 2px solid $baseDarken;
   border-top-right-radius: 20px;
   border-bottom-left-radius: 20px;
-    
+
   color: $baseText;
-  
+
+  cursor: pointer;
   transition: all 0.4s ease-out;
-  
+
   img {
     border-bottom-left-radius: 19px;
 

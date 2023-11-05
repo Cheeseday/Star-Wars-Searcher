@@ -32,14 +32,14 @@
     position: relative;
 
     display: inline-grid;
-    grid-template-areas: "select";
+    grid-template-areas: 'select';
     align-items: center;
-    
+
     min-width: 12ch;
     padding: 0.25em 0.5em;
     border: 1px solid #777;
     border-radius: 0.25em;
-    
+
     cursor: pointer;
     line-height: 1.1;
 
